@@ -22,7 +22,11 @@ export type Message = {
   sources?: Document[];
 };
 
-const wsServerUrl = await getServerEnv("BACKEND_WS_URL")
+let wsServerUrl: string;
+(async () => {
+  wsServerUrl = await getServerEnv("BACKEND_WS_URL")
+})();
+
 
 const useSocket = (
   url: string,
