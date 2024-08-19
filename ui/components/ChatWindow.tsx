@@ -22,12 +22,6 @@ export type Message = {
   sources?: Document[];
 };
 
-let wsServerUrl: string;
-(async () => {
-  wsServerUrl = await getServerEnv("BACKEND_WS_URL")
-})();
-
-
 const useSocket = (
   url: string,
   setIsWSReady: (ready: boolean) => void,
@@ -36,6 +30,9 @@ const useSocket = (
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   useEffect(() => {
+    if (!url) {
+      return;
+    }
     if (!ws) {
       const connectWs = async () => {
         let chatModel = localStorage.getItem('chatModel');
@@ -267,6 +264,8 @@ const loadMessages = async (
 };
 
 const ChatWindow = ({ id }: { id?: string }) => {
+  const [wsServerUrl, setWsServerUrl] = useState<string | null>(null);
+
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get('q');
 
@@ -329,6 +328,15 @@ const ChatWindow = ({ id }: { id?: string }) => {
       setIsReady(true);
     }
   }, [isMessagesLoaded, isWSReady]);
+
+  useEffect(() => {
+    const fetchWsServerUrl = async () => {
+      const url = await getServerEnv("BACKEND_WS_URL");
+      setWsServerUrl(url);
+    };
+
+    fetchWsServerUrl();
+  }, []);
 
   const sendMessage = async (message: string) => {
     if (loading) return;
