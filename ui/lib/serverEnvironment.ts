@@ -24,8 +24,10 @@ export async function getServerEnv(envVar: string): Promise<string | undefined> 
 
   // Fetch and cache the config if not in cache or cache is expired
   await fetchConfig();
+  console.log(cachedConfig);
+  console.log(envVar);
   if (cachedConfig == null) {
-    return process.env[envVar]
+    return process.env[envVar];
   }
   return cachedConfig[envVar];
 }
