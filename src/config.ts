@@ -25,12 +25,18 @@ type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
-const loadConfig = () =>
-  toml.parse(
-    fs.readFileSync(path.join(__dirname, `../${configFileName}`), 'utf-8'),
-  ) as any as Config;
+const configFilePath = path.join(__dirname, `../${configFileName}`);
 
-export const getPort = () => process.env.PORT ?? loadConfig().GENERAL.PORT;
+const loadConfig = () => {
+    if (fs.existsSync(configFilePath)) {
+      return toml.parse(fs.readFileSync(configFilePath, 'utf-8')) as any as Config;
+    } else {
+      return {} as Config;
+    }
+}
+
+export const getPort = () => 
+  process.env.PORT ?? loadConfig().GENERAL.PORT;
 
 export const getSimilarityMeasure = () =>
   process.env.SIMILARITY_MEASURE ?? loadConfig().GENERAL.SIMILARITY_MEASURE;
@@ -71,8 +77,5 @@ export const updateConfig = (config: RecursivePartial<Config>) => {
     }
   }
 
-  fs.writeFileSync(
-    path.join(__dirname, `../${configFileName}`),
-    toml.stringify(config),
-  );
+  fs.writeFileSync(configFilePath, toml.stringify(config));
 };
