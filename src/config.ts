@@ -36,25 +36,25 @@ const loadConfig = () => {
 }
 
 export const getPort = () => 
-  process.env.PORT ?? loadConfig().GENERAL.PORT;
+  process.env.PORT ?? loadConfig().GENERAL.PORT ?? "3001";
 
 export const getSimilarityMeasure = () =>
-  process.env.SIMILARITY_MEASURE ?? loadConfig().GENERAL.SIMILARITY_MEASURE;
+  process.env.SIMILARITY_MEASURE ?? loadConfig().GENERAL.SIMILARITY_MEASURE ?? "cosine";
 
 export const getOpenaiApiKey = () =>
-  process.env.OPENAI_API_KEY ?? loadConfig().API_KEYS.OPENAI;
+  process.env.OPENAI_API_KEY ?? loadConfig().API_KEYS.OPENAI ?? "";
 
 export const getGroqApiKey = () =>
-  process.env.GROQ_API_KEY ?? loadConfig().API_KEYS.GROQ;
+  process.env.GROQ_API_KEY ?? loadConfig().API_KEYS.GROQ ?? "";
 
 export const getAnthropicApiKey = () =>
-  process.env.ANTHROPIC_API_KEY ?? loadConfig().API_KEYS.ANTHROPIC;
+  process.env.ANTHROPIC_API_KEY ?? loadConfig().API_KEYS.ANTHROPIC ?? "";
 
 export const getSearxngApiEndpoint = () =>
-  process.env.SEARXNG_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.SEARXNG;
+  process.env.SEARXNG_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.SEARXNG ?? "http://localhost:32768";
 
 export const getOllamaApiEndpoint = () =>
-  process.env.OLLAMA_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.OLLAMA;
+  process.env.OLLAMA_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.OLLAMA ?? "";
 
 export const updateConfig = (config: RecursivePartial<Config>) => {
   const currentConfig = loadConfig();
