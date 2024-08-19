@@ -27,34 +27,50 @@ type RecursivePartial<T> = {
 
 const configFilePath = path.join(__dirname, `../${configFileName}`);
 
+const defaultConfig: Config = {
+  GENERAL: {
+    PORT: 3001,
+    SIMILARITY_MEASURE: "cosine"
+  },
+  API_KEYS: {
+    OPENAI: "",
+    GROQ: "",
+    ANTHROPIC: ""
+  },
+  API_ENDPOINTS: {
+    SEARXNG: "http://localhost:32768",
+    OLLAMA: ""
+  }
+}
+
 const loadConfig = () => {
     if (fs.existsSync(configFilePath)) {
       return toml.parse(fs.readFileSync(configFilePath, 'utf-8')) as any as Config;
     } else {
-      return {} as Config;
+      return defaultConfig;
     }
 }
 
 export const getPort = () => 
-  process.env.PORT ?? loadConfig().GENERAL.PORT ?? "3001";
+  process.env.PORT ?? loadConfig().GENERAL.PORT;
 
 export const getSimilarityMeasure = () =>
-  process.env.SIMILARITY_MEASURE ?? loadConfig().GENERAL.SIMILARITY_MEASURE ?? "cosine";
+  process.env.SIMILARITY_MEASURE ?? loadConfig().GENERAL.SIMILARITY_MEASURE;
 
 export const getOpenaiApiKey = () =>
-  process.env.OPENAI_API_KEY ?? loadConfig().API_KEYS.OPENAI ?? "";
+  process.env.OPENAI_API_KEY ?? loadConfig().API_KEYS.OPENAI;
 
 export const getGroqApiKey = () =>
-  process.env.GROQ_API_KEY ?? loadConfig().API_KEYS.GROQ ?? "";
+  process.env.GROQ_API_KEY ?? loadConfig().API_KEYS.GROQ;
 
 export const getAnthropicApiKey = () =>
-  process.env.ANTHROPIC_API_KEY ?? loadConfig().API_KEYS.ANTHROPIC ?? "";
+  process.env.ANTHROPIC_API_KEY ?? loadConfig().API_KEYS.ANTHROPIC;
 
 export const getSearxngApiEndpoint = () =>
-  process.env.SEARXNG_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.SEARXNG ?? "http://localhost:32768";
+  process.env.SEARXNG_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.SEARXNG;
 
 export const getOllamaApiEndpoint = () =>
-  process.env.OLLAMA_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.OLLAMA ?? "";
+  process.env.OLLAMA_API_ENDPOINT ?? loadConfig().API_ENDPOINTS.OLLAMA;
 
 export const updateConfig = (config: RecursivePartial<Config>) => {
   const currentConfig = loadConfig();
