@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { useSearchParams } from 'next/navigation';
 import { getSuggestions } from '@/lib/actions';
 import Error from 'next/error';
+import { getServerEnv } from '@/lib/serverEnvironment';
 
 export type Message = {
   messageId: string;
@@ -39,7 +40,7 @@ const useSocket = (
         );
 
         const providers = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/models`,
+          `${await getServerEnv("BACKEND_API_URL")}/models`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -220,7 +221,7 @@ const loadMessages = async (
   setNotFound: (notFound: boolean) => void,
 ) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/chats/${chatId}`,
+    `${await getServerEnv("BACKEND_API_URL")}/chats/${chatId}`,
     {
       method: 'GET',
       headers: {
@@ -271,7 +272,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   const [isWSReady, setIsWSReady] = useState(false);
   const ws = useSocket(
-    process.env.NEXT_PUBLIC_WS_URL!,
+    process.env.BACKEND_WS_URL!,
     setIsWSReady,
     setHasError,
   );
