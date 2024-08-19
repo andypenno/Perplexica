@@ -23,7 +23,7 @@ export type Message = {
 };
 
 const useSocket = (
-  url: string,
+  url: string | null,
   setIsWSReady: (ready: boolean) => void,
   setError: (error: boolean) => void,
 ) => {
