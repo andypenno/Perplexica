@@ -22,6 +22,8 @@ export type Message = {
   sources?: Document[];
 };
 
+const wsServerUrl = await getServerEnv("BACKEND_WS_URL")
+
 const useSocket = (
   url: string,
   setIsWSReady: (ready: boolean) => void,
@@ -272,7 +274,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   const [isWSReady, setIsWSReady] = useState(false);
   const ws = useSocket(
-    process.env.BACKEND_WS_URL!,
+    wsServerUrl,
     setIsWSReady,
     setHasError,
   );
