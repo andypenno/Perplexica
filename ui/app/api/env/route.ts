@@ -2,7 +2,7 @@ import process from 'process';
 import { NextResponse } from 'next/server';
 
 // Enable the Runtime
-export const runtime = "dynamic"
+export const runtime = "nodejs"
 
 export async function GET(_request: Request) {
   // Access environment variables
