@@ -1,8 +1,8 @@
 import process from 'process';
 import { NextResponse } from 'next/server';
 
-// Enable the Edge Runtime
-export const runtime = "edge"
+// Enable the Runtime
+export const runtime = "dynamic"
 
 export async function GET(_request: Request) {
   // Access environment variables
