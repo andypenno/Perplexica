@@ -11,8 +11,6 @@ export async function GET(_request: Request) {
     'BACKEND_WS_URL': process.env.BACKEND_WS_URL ?? process.env.NEXT_PUBLIC_WS_URL
   }
 
-  console.log("Hit")
-
   // Return the environment variables as a JSON response
   return NextResponse.json(envVars);
 }
