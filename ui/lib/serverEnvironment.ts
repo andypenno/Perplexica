@@ -1,13 +1,10 @@
-import process from 'process';
-// In-memory cache for configuration data
-let cachedConfig: { [key: string]: string } | null ;
-
 async function fetchConfig() {
   try {
     const response = await fetch('/api/env');
     if (response.ok) {
       const data = await response.json();
-      cachedConfig = data;
+      localStorage.setItem('cachedConfig', JSON.stringify(data));
+      return data;
     } else {
       throw new Error('Failed to fetch config');
     }
@@ -17,15 +14,16 @@ async function fetchConfig() {
 }
 
 export async function getServerEnv(envVar: string): Promise<string> {
-  // Check if the cache is valid
-  if (cachedConfig && cachedConfig != null) {
+  const cachedConfig = JSON.parse(localStorage.getItem('cachedConfig') || 'null');
+
+  if (cachedConfig) {
     return cachedConfig[envVar];
   }
 
-  // Fetch and cache the config if not in cache or cache is expired
-  await fetchConfig();
-  if (cachedConfig == null) {
+  const data = await fetchConfig();
+  if (!data) {
     return "";
   }
-  return cachedConfig[envVar];
+
+  return data[envVar];
 }
