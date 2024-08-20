@@ -32,8 +32,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      - BACKEND_API_URL=http://perplexica-backend:3001
-      - BACKEND_WS_URL=http://perplexica-backend:3001
+      - BACKEND_API_URL=http://127.0.0.1:3001/api
+      - BACKEND_WS_URL=ws://127.0.0.1:3001
     networks:
       - perplexica-network
     restart: unless-stopped
