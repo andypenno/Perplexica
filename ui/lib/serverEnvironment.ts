@@ -12,5 +12,6 @@ export function getServerEnv(envVar: string): string {
       default:
           result = process.env[envVar];
   }
+  console.log(`Result: ${result}`);
   return result ?? "";
 }
