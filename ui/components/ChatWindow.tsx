@@ -43,7 +43,7 @@ const useSocket = (
         );
 
         const providers = await fetch(
-          `${await getServerEnv("BACKEND_API_URL")}/models`,
+          `${getServerEnv("BACKEND_API_URL")}/models`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -224,7 +224,7 @@ const loadMessages = async (
   setNotFound: (notFound: boolean) => void,
 ) => {
   const res = await fetch(
-    `${await getServerEnv("BACKEND_API_URL")}/chats/${chatId}`,
+    `${getServerEnv("BACKEND_API_URL")}/chats/${chatId}`,
     {
       method: 'GET',
       headers: {
@@ -331,7 +331,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   useEffect(() => {
     const fetchWsServerUrl = async () => {
-      const url = await getServerEnv("BACKEND_WS_URL");
+      const url = getServerEnv("BACKEND_WS_URL");
       setWsServerUrl(url);
     };
 

@@ -21,7 +21,7 @@ const DeleteChat = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `${await getServerEnv("BACKEND_API_URL")}/chats/${chatId}`,
+        `${getServerEnv("BACKEND_API_URL")}/chats/${chatId}`,
         {
           method: 'DELETE',
           headers: {
