@@ -6,13 +6,14 @@ export async function getServerEnv(envVar: string): Promise<string> {
   let result: string | undefined;
   switch (envVar) {
       case "BACKEND_API_URL":
-          result = process.env.BACKEND_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+          result = process.env.BACKEND_API_URL ?? process.env.NEXT_PUBLIC_API_URL;4
+          break;
       case "BACKEND_WS_URL":
           result = process.env.BACKEND_WS_URL ?? process.env.NEXT_PUBLIC_WS_URL;
+          break;
       default:
           result = process.env[envVar];
+          break;
   }
-  console.log(`Result: ${result}`);
-  console.log(`NEXT_PUBLIC_API_URL: ${process.env.NEXT_PUBLIC_API_URL}`)
   return result ?? "";
 }
