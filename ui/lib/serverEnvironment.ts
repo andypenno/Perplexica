@@ -3,7 +3,7 @@
 import process from 'process';
 
 export function getServerEnv(envVar: string): string {
-  let result: string;
+  let result: string | undefined;
   switch (envVar) {
       case "BACKEND_API_URL":
           result = process.env.BACKEND_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
@@ -12,5 +12,5 @@ export function getServerEnv(envVar: string): string {
       default:
           result = process.env[envVar];
   }
-  return result;
+  return result ?? "";
 }
