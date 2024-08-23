@@ -13,5 +13,6 @@ export async function getServerEnv(envVar: string): Promise<string> {
           result = process.env[envVar];
   }
   console.log(`Result: ${result}`);
+  console.log(`NEXT_PUBLIC_API_URL: ${process.env.NEXT_PUBLIC_API_URL}`)
   return result ?? "";
 }
