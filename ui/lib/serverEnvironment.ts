@@ -2,7 +2,7 @@
 
 import process from 'process';
 
-export function getServerEnv(envVar: string): string {
+export async function getServerEnv(envVar: string): Promise<string> {
   let result: string | undefined;
   switch (envVar) {
       case "BACKEND_API_URL":
